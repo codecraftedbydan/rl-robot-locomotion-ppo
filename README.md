@@ -26,7 +26,7 @@ are in [docs/Experiments.md](docs/Experiments.md) and [docs/Results.md](docs/Res
 ![HalfCheetah-v5 galloping (5256 ± 74)](docs/media/halfcheetah.gif)
 ![Ant-v5 trotting (567 ± 379, partially converged)](docs/media/ant.gif)
 
-Full-length evaluation videos (5 episodes each):
+Full-length evaluation videos:
 - [Walker2d-v5](https://github.com/user-attachments/assets/321ff87a-ff67-4e7c-8f39-653586dc74b8)
 - [HalfCheetah-v5](https://github.com/user-attachments/assets/1d2eeb7b-ccd6-482d-9ac0-842e0df94c91)
 - [Ant-v5](https://github.com/user-attachments/assets/a6af2650-87bc-4210-83b5-fff151eb0be0)
