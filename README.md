@@ -12,9 +12,9 @@ Three from-scratch reproductions on unmodified code:
 
 | Environment | CleanRL PPO (v4) | SB3 PPO (v3, tuned) | **This repo (v5, deterministic eval)** | Verdict |
 |-------------|:----------------:|:-------------------:|:---------------------------------------:|:--------|
-| **HalfCheetah-v5** | 1442.64 ± 46.03 | 3397.00 ± 1662.36 | **5256.53 ± 73.67**  | ✅ **3.6× CleanRL, 1.5× SB3, tightest σ of any comparison** |
+| **HalfCheetah-v5** | 1442.64 ± 46.03 | 3397.00 ± 1662.36 | **5256.53 ± 73.67**  | ✅ **3.6x CleanRL, 1.5x SB3, tightest σ of any comparison** |
 | **Walker2d-v5**    | 2287.95 ± 571.78 | 3478.79 ± 821.70 | **3690.78 ± 155.55** | ✅ exceeds CleanRL upper 1σ, matches SB3-tuned |
-| **Humanoid-v5**    | 716.11 ± 49.08 | 5819 ± 663 (heavy tuning + v3) | 620–646 (training only) | ✅ reproduced CleanRL within 1σ |
+| **Humanoid-v5**    | 716.11 ± 49.08 | 5819 ± 663 (heavy tuning + v3) | 620-646 (training only) | ✅ reproduced CleanRL within 1σ |
 | **Ant-v5**         | ~2400 (est.)    | -                   | 567 ± 379 (3M steps, partially converged) | ⚠️ trotting gait learned, needs longer training for stability |
 
 Full analysis, training curves, and honest discussion of the Humanoid ceiling
@@ -63,12 +63,21 @@ videos/                    # eval MP4s
 Every algorithmic decision is explained in [docs/PPO.md](docs/PPO.md). Read
 that first if you want to understand the *why*.
 
-## Setup (Windows, PowerShell)
+## Setup
 
+**Windows (PowerShell)**
 ```powershell
 # From the project root
 python -m venv .venv
 .venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+```
+
+**macOS / Linux (bash)**
+```bash
+# From the project root
+python -m venv .venv
+source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
@@ -77,6 +86,7 @@ install required. Tested with Python 3.12, PyTorch 2.13 (+cu126), gymnasium 1.3.
 
 ## Train
 
+**Windows (PowerShell)**
 ```powershell
 python src\train.py --config configs\walker2d_v5.yaml
 python src\train.py --config configs\halfcheetah_v5.yaml
@@ -84,9 +94,17 @@ python src\train.py --config configs\ant_v5.yaml
 python src\train.py --config configs\humanoid_v5.yaml
 ```
 
-TensorBoard:
+**macOS / Linux (bash)**
+```bash
+python src/train.py --config configs/walker2d_v5.yaml
+python src/train.py --config configs/halfcheetah_v5.yaml
+python src/train.py --config configs/ant_v5.yaml
+python src/train.py --config configs/humanoid_v5.yaml
+```
 
-```powershell
+TensorBoard (same on all platforms):
+
+```bash
 tensorboard --logdir logs
 ```
 
@@ -96,8 +114,14 @@ healthy values look like.
 
 ## Smoke test (fast, ~1 minute)
 
+**Windows (PowerShell)**
 ```powershell
 python src\train.py --config configs\ant_v5.yaml --override-total-timesteps 20000
+```
+
+**macOS / Linux (bash)**
+```bash
+python src/train.py --config configs/ant_v5.yaml --override-total-timesteps 20000
 ```
 
 Success criteria:
@@ -108,6 +132,7 @@ Success criteria:
 
 ## Evaluate + record a video
 
+**Windows (PowerShell)**
 ```powershell
 python src\evaluate.py `
   --checkpoint models\<run_name>\ckpt_iterNNNNNN.pt `
@@ -116,8 +141,17 @@ python src\evaluate.py `
   --video-dir videos\my_named_run
 ```
 
+**macOS / Linux (bash)**
+```bash
+python src/evaluate.py \
+  --checkpoint models/<run_name>/ckpt_iterNNNNNN.pt \
+  --episodes 5 \
+  --video \
+  --video-dir videos/my_named_run
+```
+
 MP4s land in `videos/my_named_run/`. Deterministic (mean-action) evaluation
-regularly beats the stochastic training return by 20–50%.
+regularly beats the stochastic training return by 20-50%.
 
 ## Design principles
 
