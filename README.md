@@ -22,9 +22,14 @@ are in [docs/Experiments.md](docs/Experiments.md) and [docs/Results.md](docs/Res
 
 ### Videos
 
-- Walker2d-v5 walking (`3690 ± 156`): (https://github.com/user-attachments/assets/321ff87a-ff67-4e7c-8f39-653586dc74b8)
-- HalfCheetah-v5 galloping (`5256 ± 74`): https://github.com/user-attachments/assets/1d2eeb7b-ccd6-482d-9ac0-842e0df94c91
-- Ant-v5 trotting (`567 ± 379`, partially converged at 3M steps): https://github.com/user-attachments/assets/a6af2650-87bc-4210-83b5-fff151eb0be0
+![Walker2d-v5 walking (3690 ± 156)](docs/media/walker2d.gif)
+![HalfCheetah-v5 galloping (5256 ± 74)](docs/media/halfcheetah.gif)
+![Ant-v5 trotting (567 ± 379, partially converged)](docs/media/ant.gif)
+
+Full-length evaluation videos (5 episodes each):
+- [Walker2d-v5](https://github.com/user-attachments/assets/321ff87a-ff67-4e7c-8f39-653586dc74b8)
+- [HalfCheetah-v5](https://github.com/user-attachments/assets/1d2eeb7b-ccd6-482d-9ac0-842e0df94c91)
+- [Ant-v5](https://github.com/user-attachments/assets/a6af2650-87bc-4210-83b5-fff151eb0be0)
 
 ## Contents
 
@@ -40,6 +45,7 @@ docs/
   Learning_Notes.md        # plain-English explanation - start here if new to RL
   Experiments.md           # full experiment log for every run
   Results.md               # milestone + eval tables + benchmark comparison
+  Architecture.md          # repo layout, design decisions, file-by-file walkthrough
 src/
   actor.py                 # Gaussian policy: mean MLP + state-independent log_std
   critic.py                # value MLP
