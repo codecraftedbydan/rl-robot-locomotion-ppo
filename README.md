@@ -1,4 +1,4 @@
-# PPO from scratch — MuJoCo continuous control
+# PPO from scratch - MuJoCo continuous control
 
 A research-quality, from-scratch PyTorch implementation of Proximal Policy
 Optimization for continuous control on MuJoCo tasks (gymnasium + MuJoCo).
@@ -6,7 +6,7 @@ Optimization for continuous control on MuJoCo tasks (gymnasium + MuJoCo).
 **No Stable-Baselines3 in the training path.** SB3 is only referenced later as
 an external benchmark to compare against; it is never imported here.
 
-## Results — verified against CleanRL and SB3 benchmarks
+## Results - verified against CleanRL and SB3 benchmarks
 
 Three from-scratch reproductions on unmodified code:
 
@@ -15,7 +15,7 @@ Three from-scratch reproductions on unmodified code:
 | **HalfCheetah-v5** | 1442.64 ± 46.03 | 3397.00 ± 1662.36 | **5256.53 ± 73.67**  | ✅ **3.6× CleanRL, 1.5× SB3, tightest σ of any comparison** |
 | **Walker2d-v5**    | 2287.95 ± 571.78 | 3478.79 ± 821.70 | **3690.78 ± 155.55** | ✅ exceeds CleanRL upper 1σ, matches SB3-tuned |
 | **Humanoid-v5**    | 716.11 ± 49.08 | 5819 ± 663 (heavy tuning + v3) | 620–646 (training only) | ✅ reproduced CleanRL within 1σ |
-| **Ant-v5**         | ~2400 (est.)    | —                   | 567 ± 379 (3M steps, partially converged) | ⚠️ trotting gait learned, needs longer training for stability |
+| **Ant-v5**         | ~2400 (est.)    | -                   | 567 ± 379 (3M steps, partially converged) | ⚠️ trotting gait learned, needs longer training for stability |
 
 Full analysis, training curves, and honest discussion of the Humanoid ceiling
 are in [docs/Experiments.md](docs/Experiments.md) and [docs/Results.md](docs/Results.md).
@@ -39,7 +39,7 @@ configs/
   halfcheetah_v5.yaml      # 2D running cheetah
 docs/
   PPO.md                   # theory, math, implementation details, bugs, verification
-  Learning_Notes.md        # plain-English explanation — start here if new to RL
+  Learning_Notes.md        # plain-English explanation - start here if new to RL
   Experiments.md           # full experiment log for every run
   Results.md               # milestone + eval tables + benchmark comparison
 src/
@@ -115,42 +115,13 @@ python src\evaluate.py `
 MP4s land in `videos/my_named_run/`. Deterministic (mean-action) evaluation
 regularly beats the stochastic training return by 20–50%.
 
-## Hosting the videos
-
-**Recommended: GitHub issue attachment trick** (no third-party account, no
-Git LFS, MP4 plays inline in the README).
-
-1. On the GitHub repo page, click **Issues → New issue** (don't submit it,
-   just use the comment box).
-2. Drag your `.mp4` file into the issue comment box.
-3. GitHub uploads it and pastes a Markdown snippet that looks like
-   `![filename](https://user-images.githubusercontent.com/…/….mp4)`.
-4. Copy the URL out of that snippet.
-5. Paste it into the "Videos" section above like this:
-   ```markdown
-   - Walker2d-v5 walking (`3690 ± 156`): https://user-images.githubusercontent.com/…/….mp4
-   ```
-6. Close the issue tab without submitting — the URL persists forever.
-
-The videos will render as playable inline video on the GitHub-rendered
-README. Total effort: ~2 minutes per video. Max file size 100 MB (way more
-than needed).
-
-**Alternative options:**
-- **YouTube (unlisted)** — upload, grab the share link, paste under the video
-  bullet. Not inline-playable on GitHub but everyone knows how to click a
-  YouTube link.
-- **Git LFS** — commit the MP4s into the repo under `videos/`. Requires
-  `git lfs install` and adds `.gitattributes`. Works if you want the videos
-  to travel with the repo (e.g. for offline demos).
-
 ## Design principles
 
 - **Correctness > cleverness.** Loops in GAE, explicit tensors in the buffer.
 - **Modular but no leaky abstractions.** Config is a dict, buffer is a
   container, agent owns the update. No mixins, no factories.
 - **Nothing hidden.** All losses and metrics computed in one function
-  (`PPOAgent.update`) — the whole PPO objective is visible on a single screen.
+  (`PPOAgent.update`) - the whole PPO objective is visible on a single screen.
 - **Type-hinted throughout.**
 - **PyTorch only.** No JAX, no SB3, no external RL libs.
 - **All 13 core + 9 continuous-action implementation details** from
