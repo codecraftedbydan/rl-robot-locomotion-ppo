@@ -277,5 +277,3 @@ Good practices learned from running many experiments:
 - Add an opt-in distributed sampler (multiple processes) for faster data collection and larger `num_envs`.
 - Provide a small `examples/` directory with a tiny environment and precomputed checkpoint for quick demos.
 
----
-If you'd like, I can (a) add this high-level summary to `README.md`, (b) generate a `CONTRIBUTING.md` template, or (c) add inline docstrings to each `src/` file that match this documentation. Which should I do next?
