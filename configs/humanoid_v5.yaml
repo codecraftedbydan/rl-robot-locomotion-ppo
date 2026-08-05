@@ -1,0 +1,48 @@
+# Humanoid-v5 PPO configuration.
+# Every value is explained in docs/PPO.md §9.
+
+# -------- experiment identity --------
+exp_name: "humanoidlab_ppo_humanoid_v5"
+env_id: "Humanoid-v5"
+seed: 1
+device: "auto"           # "auto" -> cuda if available else cpu
+
+# -------- vectorized rollout --------
+num_envs: 16             # parallel envs (SyncVectorEnv)
+n_steps: 512            # steps per env per iteration
+total_timesteps: 15000000
+
+# -------- optimization --------
+learning_rate: 3.0e-4
+anneal_lr: true          # linear decay to 0 over total_timesteps
+n_epochs: 10             # K in the docs
+minibatch_size: 64
+max_grad_norm: 0.5
+
+# -------- PPO objective --------
+gamma: 0.99
+gae_lambda: 0.95
+clip_coef: 0.2           # epsilon in L_CLIP
+clip_vloss: true         # clipped value loss
+ent_coef: 0.001
+vf_coef: 0.5
+normalize_advantage: true
+target_kl: null          # set e.g. 0.03 to enable early stopping
+
+# -------- env-side normalization --------
+normalize_obs: true
+normalize_reward: true
+clip_obs: 10.0
+clip_reward: 10.0
+
+# -------- network --------
+hidden_sizes: [256, 256]
+activation: "tanh"       # "tanh" or "relu"
+log_std_init: -0.5       # sigma = exp(-0.5) ≈ 0.61
+
+# -------- logging / checkpointing --------
+log_dir: "logs"
+ckpt_dir: "models"
+video_dir: "videos"
+save_every_iters: 25     # checkpoint every N PPO iterations
+log_every_iters: 1

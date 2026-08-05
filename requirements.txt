@@ -1,0 +1,15 @@
+# Core RL / DL stack
+torch>=2.2
+numpy>=1.26
+
+# MuJoCo Ant-v5 lives in gymnasium >= 1.0
+gymnasium[mujoco]>=1.0.0
+
+# Logging / config / misc
+tensorboard>=2.15
+PyYAML>=6.0
+tqdm>=4.66
+
+# Video recording for evaluate.py
+imageio>=2.34
+imageio-ffmpeg>=0.5

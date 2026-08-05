@@ -1,0 +1,57 @@
+# HalfCheetah-v5 PPO configuration.
+#
+# HalfCheetah-v5 is a 2D running cheetah (torso + 6 leg joints).
+# Observation: 17-dim.  Action: 6-dim in [-1, 1].
+# Note: HalfCheetah has NO healthy-state termination — episode always runs
+# to the timeout (1000 steps). So "not falling" is free; the only thing that
+# matters is forward velocity.
+#
+# Matches CleanRL's benchmarked `ppo_continuous_action.py` recipe.
+# CleanRL Walker2d-v4: 1442.64 ± 46.03 (3 seeds, 2M steps, num_envs=1).
+# Same code shape as walker2d config — only env_id differs.
+
+# -------- experiment identity --------
+exp_name: "ppo_halfcheetah_v5"
+env_id: "HalfCheetah-v5"
+seed: 1
+device: "auto"
+
+# -------- vectorized rollout --------
+num_envs: 4
+n_steps: 512                    # 4 * 512 = 2048 = CleanRL's batch
+total_timesteps: 2000000        # matches CleanRL benchmark
+
+# -------- optimization --------
+learning_rate: 3.0e-4
+anneal_lr: true
+n_epochs: 10
+minibatch_size: 64
+max_grad_norm: 0.5
+
+# -------- PPO objective --------
+gamma: 0.99
+gae_lambda: 0.95
+clip_coef: 0.2
+clip_vloss: true
+ent_coef: 0.0
+vf_coef: 0.5
+normalize_advantage: true
+target_kl: null
+
+# -------- env-side normalization --------
+normalize_obs: true
+normalize_reward: true
+clip_obs: 10.0coc
+clip_reward: 10.0
+
+# -------- network --------
+hidden_sizes: [64, 64]
+activation: "tanh"
+log_std_init: 0.0
+
+# -------- logging / checkpointing --------
+log_dir: "logs"
+ckpt_dir: "models"
+video_dir: "videos"
+save_every_iters: 25
+log_every_iters: 1

@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+
+# Virtual environment
+.venv/
+venv/
+env/
+
+# Training outputs — large, machine-specific, not useful in a repo
+logs/
+models/
+videos/
+plots/
+tb_exports/
+
+# Checkpoint files (also covered by models/ above, but belt-and-braces)
+*.pt
+*.pth
+
+# Editor / OS
+.vscode/settings.json
+.idea/
+*.swp
+*~
+.DS_Store
+Thumbs.db
+
+# Jupyter (if ever used for analysis)
+.ipynb_checkpoints/
