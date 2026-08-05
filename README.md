@@ -22,11 +22,9 @@ are in [docs/Experiments.md](docs/Experiments.md) and [docs/Results.md](docs/Res
 
 ### Videos
 
-<!-- Drop MP4s into a GitHub issue comment then paste the resulting URLs here. Instructions in "Hosting the videos" section below. -->
-
-- Walker2d-v5 walking (`3690 ± 156`): *(paste URL here)*
-- HalfCheetah-v5 galloping (`5256 ± 74`): *(paste URL here)*
-- Ant-v5 trotting (`567 ± 379`, partially converged at 3M steps): *(paste URL here)*
+- Walker2d-v5 walking (`3690 ± 156`): (https://github.com/user-attachments/assets/321ff87a-ff67-4e7c-8f39-653586dc74b8)
+- HalfCheetah-v5 galloping (`5256 ± 74`): https://github.com/user-attachments/assets/1d2eeb7b-ccd6-482d-9ac0-842e0df94c91
+- Ant-v5 trotting (`567 ± 379`, partially converged at 3M steps): https://github.com/user-attachments/assets/a6af2650-87bc-4210-83b5-fff151eb0be0
 
 ## Contents
 
