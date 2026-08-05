@@ -33,7 +33,7 @@ Next thing to try:
 
 ## Runs
 
-### Run: ppo_humanoid_v5__seed1  (baseline — stopped early)
+### Run: ppo_humanoid_v5__seed1  (baseline - stopped early)
 
 - Date: 2026-08-04
 - Config: `configs/humanoid_v5.yaml`
@@ -45,7 +45,7 @@ Next thing to try:
 Hypothesis (going in):
 - Humanoid-v5 is significantly harder than Ant-v5 (obs 348 vs 105, action 17 vs 8).
 - Bumped `hidden_sizes` from `[64, 64]` to `[256, 256]` for the extra capacity.
-- Bumped `total_timesteps` from 3M to 10M — expected first standing by ~500k,
+- Bumped `total_timesteps` from 3M to 10M - expected first standing by ~500k,
   first walking by ~3M, plateau around 5000–8000 return by ~8M.
 
 Result:
@@ -71,7 +71,7 @@ Diagnostics at end of training: *(fill in from TB CSVs when exporting)*
 
 Next thing to try:
 - Retry with `configs/humanoid_v5_tuned.yaml`:
-    - `num_envs`     4  →  16   (most important — trajectory diversity)
+    - `num_envs`     4  →  16   (most important - trajectory diversity)
     - `n_steps`      2048 → 512 (keep batch size = 16 × 512 = 8192)
     - `total_timesteps` 10M → 15M
     - `ent_coef`     0.0  → 0.001  (small exploration nudge)
@@ -123,14 +123,14 @@ Notes / observations:
   numbers in the wider literature come from one of three fundamentally
   different setups, none of which are just "more GPU":
     1. **Isaac Gym / Brax** (GPU-native physics simulation with **8192**
-       parallel envs — 2000× more than us). CleanRL's IsaacGym PPO gets
+       parallel envs - 2000× more than us). CleanRL's IsaacGym PPO gets
        ~2988 on Humanoid; RL Games with tuned hyperparameters on the same
        Isaac Gym setup gets ~6254.
     2. **SAC / TD3** (off-policy algorithms with a replay buffer, dramatically
        more sample-efficient than PPO on hard continuous-control tasks).
     3. **Aggressively hyperparameter-searched** configs (e.g. Stable-Baselines3
        zoo uses `gamma=0.95`, `gae_lambda=0.9`, `n_epochs=20`, `batch_size=32`,
-       tuned `ent_coef`, tuned `lr` — reports ~5819 on Humanoid-**v3**,
+       tuned `ent_coef`, tuned `lr` - reports ~5819 on Humanoid-**v3**,
        which has a slightly different reward function to v5).
 - So the limit here is *algorithmic and environmental*, not hardware. Vanilla
   PPO on CPU MuJoCo Humanoid has a well-documented ceiling around 700–1000
@@ -154,7 +154,7 @@ Next thing to try:
 - Config: `configs/walker2d_v5.yaml`
 - Overrides: none
 - Hardware: local GPU (RTX 3060)
-- Wall-clock: ~1.5h (partial — stopped by editor crash)
+- Wall-clock: ~1.5h (partial - stopped by editor crash)
 - Global steps: ~1.4M of 2M planned
 
 Hypothesis (going in):
@@ -167,7 +167,7 @@ Hypothesis (going in):
     - Plateau in the 1500–3000 range by 2M steps.
 
 Result (training curve, stochastic policy):
-- Return crossed 1500 by ~350k steps  (**faster than predicted** — predicted 800k).
+- Return crossed 1500 by ~350k steps  (**faster than predicted** - predicted 800k).
 - Return reached **1800 by 450k steps**.
 - Plateau at ~1800 from 450k → 1.4M (LR anneal + policy near-deterministic).
 - Extrapolated final return (had run completed to 2M): probably 1900–2100.
@@ -179,7 +179,7 @@ Result (deterministic evaluation, mean-action policy, 5 episodes):
 
 Reference-implementation comparison:
 - CleanRL PPO Walker2d-v4 benchmark: 2288 ± 572 (upper 1σ bound ≈ 2860).
-- **Ours (eval): 3690 — exceeds the top of the CleanRL 1σ range.**
+- **Ours (eval): 3690 - exceeds the top of the CleanRL 1σ range.**
 - Two contributing factors:
     1. Deterministic (mean-action) evaluation on a stochastic-trained policy
        commonly beats the training return by 20–50%. The exploration noise
@@ -189,7 +189,7 @@ Reference-implementation comparison:
        local optimum.
 
 Behavioural notes:
-- Video shows a **bipedal synchronous hop** — both legs move together, one
+- Video shows a **bipedal synchronous hop** - both legs move together, one
   bound then contact then push-off, repeat. Not a proper alternating
   stride but a stable and fast gait.
 - This "gallop-hop" is a well-documented Walker2d local optimum in the PPO
@@ -197,7 +197,7 @@ Behavioural notes:
   simultaneous ground contact for stability, no fall risk. Papers usually
   produce it too.
 - To get an alternating stride, would typically need either a gait-cycle
-  reward shaping term or symmetry regularization — out of scope for a
+  reward shaping term or symmetry regularization - out of scope for a
   vanilla PPO benchmark.
 
 Diagnostics at end of training: *(fill in from TB CSVs when exporting)*
@@ -230,7 +230,7 @@ Next thing to try:
 - Global steps: 2_000_000 (full budget)
 
 Hypothesis (going in):
-- HalfCheetah-v5 is a 2D running cheetah with no fall termination — the
+- HalfCheetah-v5 is a 2D running cheetah with no fall termination - the
   reward is essentially pure forward velocity minus a small control cost.
 - Reward landscape is smooth and always positive-gradient toward running,
   which makes it one of the easier MuJoCo tasks for vanilla PPO.
@@ -250,7 +250,7 @@ Reference-implementation comparison:
 - CleanRL PPO HalfCheetah-v4 benchmark: 1442.64 ± 46.03 (their upper 1σ
   bound is ~1489).
 - Stable-Baselines3 PPO HalfCheetah-v3 (1M steps, 1 seed): 3397.00 ± 1662.36.
-- **Ours (eval): 5256.53** — **3.6× CleanRL's number, 1.5× SB3's number**.
+- **Ours (eval): 5256.53** - **3.6× CleanRL's number, 1.5× SB3's number**.
 - This is in the same league as tuned Tianshou (~7337) and clearly above
   every default-hyperparameter published result we can compare against.
 - Standard deviation of 73 on a mean of 5256 = **1.4% variance across
@@ -258,7 +258,7 @@ Reference-implementation comparison:
 
 Behavioural notes:
 - Gait is a fast smooth gallop (expected for HalfCheetah given no fall risk).
-- No sign of the classic "flip on back and paddle" reward hack — v5's
+- No sign of the classic "flip on back and paddle" reward hack - v5's
   reward shaping is sufficient to keep the policy in a natural gait.
 
 Diagnostics at end of training: *(fill in from TB CSVs when exporting)*
@@ -297,7 +297,7 @@ Hypothesis (going in):
   updates per wall-clock hour.
 - CleanRL Ant-v4 benchmark: no direct published number; estimated ~2400 based
   on related env benchmarks.
-- Expected trajectory: similar to Walker2d — stable trot discovered by 1–2M steps.
+- Expected trajectory: similar to Walker2d - stable trot discovered by 1–2M steps.
 
 Result (deterministic evaluation, mean-action policy, 5 episodes):
 - **Mean return: 566.88 ± 379.09**
@@ -309,7 +309,7 @@ Interpretation of the result:
   episode length of only 664/1000 tells the main story: the policy frequently
   falls over. When it doesn't fall, it can score up to 1157 (a respectable
   trot). When it does fall early, it scores ~150.
-- This is NOT a failed policy — it is a **partially-learned gait** that hasn't
+- This is NOT a failed policy - it is a **partially-learned gait** that hasn't
   yet converged to stable locomotion. Three possible causes:
     1. **Still mid-learning.** Ant-v5's reward landscape is harder than
        HalfCheetah (fall risk) but has 8 joints vs Walker2d's 6, so the
@@ -317,7 +317,7 @@ Interpretation of the result:
        config is probably still at the "early trot" stage.
     2. **Single seed instability.** Ant PPO results are known to be
        seed-sensitive. A second seed might produce a much more stable policy.
-    3. **config had `n_steps=2048` for part of its history** — the very first
+    3. **config had `n_steps=2048` for part of its history** - the very first
        smoke-test run (2 iterations) used the old setting. The fresh 3M-step
        run used the corrected 512 setting and is what generated this result.
 - The video (best episode: max=1157) should show a coordinated 4-legged trot.
@@ -333,7 +333,7 @@ Notes / observations:
 - Ant-v5 is genuinely harder than HalfCheetah for PPO because fall termination
   is part of the reward landscape. A longer run (5–10M steps) with the
   corrected config would likely reach stable locomotion. This is consistent
-  with the literature — CleanRL Ant-v4 runs are typically shown at 3–5M steps.
+  with the literature - CleanRL Ant-v4 runs are typically shown at 3–5M steps.
 - This completes the original project brief (Ant-v5 + PPO from scratch).
 
 Next thing to try:

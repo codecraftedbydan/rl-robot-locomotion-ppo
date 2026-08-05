@@ -1,4 +1,4 @@
-# Learning Notes — Understanding this RL project
+# Learning Notes - Understanding this RL project
 
 This is a plain-English explanation of what's happening under the hood.
 No maths jargon. Real-world analogies throughout.
@@ -11,7 +11,7 @@ We're teaching a simulated robot to **move forward using trial and error**.
 
 The robot takes an action (move its joints), gets a reward (how far did it move?),
 and slowly learns which actions lead to more reward. We never write a single rule
-like "bend knee 30 degrees" — the robot figures that out entirely on its own.
+like "bend knee 30 degrees" - the robot figures that out entirely on its own.
 
 **The algorithm doing this is called PPO** (Proximal Policy Optimization).
 It's the same family of algorithm that trained OpenAI's Dota 2 bot and
@@ -28,9 +28,9 @@ Think of this as **the brain**. It takes in what the robot can sense
 Technically: it's a small neural network (two layers of 64 neurons) that maps
 *observations → actions*.
 
-The policy is stochastic — it doesn't always pick the same action. It samples
+The policy is stochastic - it doesn't always pick the same action. It samples
 from a probability distribution (a Gaussian / bell curve) centred on its best
-guess. This randomness is *intentional* — it's how the robot explores.
+guess. This randomness is *intentional* - it's how the robot explores.
 
 ### The Value Function (critic.py)
 Think of this as **an internal rating of how good the current situation is**.
@@ -53,7 +53,7 @@ its sensor readings, and hands out rewards.
 
 ---
 
-## 3. How PPO learns — the feedback loop
+## 3. How PPO learns - the feedback loop
 
 ```
 COLLECT DATA (rollout)
@@ -93,7 +93,7 @@ innovation of PPO.
 
 ---
 
-## 5. The Advantage — what the value function is actually for
+## 5. The Advantage - what the value function is actually for
 
 After each action we ask: **did things go better or worse than expected?**
 
@@ -107,7 +107,7 @@ Near-zero advantage = "exactly what I expected, no update needed"
 
 This is why we need both an actor *and* a critic. The critic provides the
 "what I expected" baseline. Without it, we'd just reward every action that
-happened to precede a good outcome — even if it had nothing to do with it.
+happened to precede a good outcome - even if it had nothing to do with it.
 
 ---
 
@@ -131,7 +131,7 @@ Starting from the last timestep and going backward. That's it.
 
 ---
 
-## 7. Observation normalization — why it matters
+## 7. Observation normalization - why it matters
 
 MuJoCo observations contain joint angles (around ±3), velocities (could be ±50),
 and contact forces (could be ±500). If you feed these raw into a neural network,
@@ -142,19 +142,19 @@ every observation dimension. Subtract the mean, divide by the std.
 Now everything lives roughly in the range [-5, 5].
 
 This is `NormalizeObservation` in the env factory. The stats are saved inside
-the checkpoint — without them, the loaded policy would see "wrong" inputs at
+the checkpoint - without them, the loaded policy would see "wrong" inputs at
 evaluation time and behave randomly.
 
 ---
 
-## 8. Reward normalization — why it matters
+## 8. Reward normalization - why it matters
 
 Similar problem for rewards. Ant's reward is ~3 per step. HalfCheetah's can
 be ~30 per step. If you train on both with the same learning rate, the
 value function for HalfCheetah gets wild gradients.
 
 **Solution**: divide the reward by a running estimate of the return's
-standard deviation (not the reward's — the discounted cumulative reward's).
+standard deviation (not the reward's - the discounted cumulative reward's).
 Now the value function always fits numbers near [-5, 5] regardless of env.
 
 This is `NormalizeReward` in the env factory.
@@ -184,7 +184,7 @@ bootstrapping the last value regardless.
 ## 10. Why training return ≠ evaluation return
 
 During training, the policy adds **random noise** to every action (it samples
-from the Gaussian). This is intentional — it explores.
+from the Gaussian). This is intentional - it explores.
 
 But during evaluation (`src/evaluate.py`), we use the **mean action** directly.
 No noise. The policy plays its "best guess" every step.
@@ -214,7 +214,7 @@ Humanoid has 17 joints and can fall in 3D. The reward landscape has a
 "standing still" local optimum that earns ~5 reward/step safely. Any attempt
 to walk risks falling → 0 reward. PPO with a small number of parallel
 environments gets stuck here. Breaking out requires either:
-- A different algorithm (SAC — off-policy, replay buffer)
+- A different algorithm (SAC - off-policy, replay buffer)
 - Massively more parallel environments (8000+ in Isaac Gym)
 - Aggressive hyperparameter tuning
 
@@ -251,11 +251,11 @@ not a bug in our code.
    when we matched the batch size to what CleanRL uses (2048 samples/update),
    even though we had the same total steps.
 
-3. **Humanoid is not a "bigger ant".** It's a fundamentally harder problem —
+3. **Humanoid is not a "bigger ant".** It's a fundamentally harder problem -
    not just a matter of more training or a bigger GPU.
 
 4. **HalfCheetah is suspiciously easy.** 5256 return far exceeded our
-   expectations. Probably because it never terminates — the reward signal is
+   expectations. Probably because it never terminates - the reward signal is
    always flowing, and PPO can always improve without worrying about falling.
 
 5. **The "first-iter ratio == 1" check.** A single assert in the training loop
@@ -264,7 +264,7 @@ not a bug in our code.
 
 6. **Ant is harder than it looks.** HalfCheetah never falls so PPO can always
    improve. Ant falls → episode ends → you get zero reward for the rest of
-   the episode. This makes the reward landscape much harder to navigate — a
+   the episode. This makes the reward landscape much harder to navigate - a
    partially-learned gait that stumbles occasionally scores catastrophically
    low, making the policy very sensitive to small changes.
 
@@ -275,7 +275,7 @@ not a bug in our code.
 I built software that teaches a robot to walk, starting from knowing nothing.
 It tries random movements, gets a score based on how far it moved, and gradually
 learns which movements lead to higher scores. After a few million attempts, it
-figures out a working gait entirely on its own — I never told it what walking
+figures out a working gait entirely on its own - I never told it what walking
 looks like. The same algorithm is used by OpenAI to make ChatGPT respond the
 way it does, just with human feedback as the reward signal instead of forward
 velocity.

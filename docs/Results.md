@@ -22,7 +22,7 @@ hyperparameter tuning + Humanoid-v3. Not vanilla PPO on CPU MuJoCo. See
 
 ## Milestones
 
-### Humanoid-v5 — run `ppo_humanoid_v5__seed1` (baseline)
+### Humanoid-v5 - run `ppo_humanoid_v5__seed1` (baseline)
 
 | Milestone                     | Global steps | Mean return (last 20) | Notes                                     |
 |-------------------------------|--------------|-----------------------|-------------------------------------------|
@@ -31,14 +31,14 @@ hyperparameter tuning + Humanoid-v3. Not vanilla PPO on CPU MuJoCo. See
 | Return reaches 600            | ~3.5M        | ~600                  | improvement rate halved                   |
 | Plateau                       | ~6.1M        | ~646                  | stuck in "safe standing" local optimum    |
 
-### Humanoid-v5 — run `ppo_humanoid_v5_tuned__seed1` (tuned)
+### Humanoid-v5 - run `ppo_humanoid_v5_tuned__seed1` (tuned)
 
 | Milestone                     | Global steps | Mean return (last 20) | Notes                                     |
 |-------------------------------|--------------|-----------------------|-------------------------------------------|
 | Same as baseline early curve  | ~1M          | ~500                  | tuning did not accelerate early learning  |
 | Plateau                       | 15M          | ~620                  | matches CleanRL reference (~716 ± 49)     |
 
-### Walker2d-v5 — run `ppo_walker2d_v5__seed1`
+### Walker2d-v5 - run `ppo_walker2d_v5__seed1`
 
 | Milestone                     | Global steps | Mean return (training) | Notes                                       |
 |-------------------------------|--------------|------------------------|---------------------------------------------|
@@ -49,18 +49,18 @@ hyperparameter tuning + Humanoid-v3. Not vanilla PPO on CPU MuJoCo. See
 | Plateau                       | ~450k–1.4M   | ~1800                  | LR anneal + policy near-deterministic        |
 | Stopped (VS Code crash)       | ~1.4M        | ~1800                  | remaining ~600k not needed given eval result |
 
-### HalfCheetah-v5 — run `ppo_halfcheetah_v5__seed1`
+### HalfCheetah-v5 - run `ppo_halfcheetah_v5__seed1`
 
 | Milestone                     | Global steps | Notes                                       |
 |-------------------------------|--------------|---------------------------------------------|
 | Full training run             | 2_000_000    | completed; deterministic eval below         |
 
-### Ant-v5 — run `ppo_ant_v5__seed1` (original brief)
+### Ant-v5 - run `ppo_ant_v5__seed1` (original brief)
 
 | Milestone                     | Global steps | Notes                                          |
 |-------------------------------|--------------|------------------------------------------------|
 | Full training run             | 3_000_000    | completed; deterministic eval below            |
-| Policy not yet stable         | 3M           | mean ep length 664/1000 — falls ~1/3 of evals |
+| Policy not yet stable         | 3M           | mean ep length 664/1000 - falls ~1/3 of evals |
 
 ## Evaluation
 
@@ -73,7 +73,7 @@ hyperparameter tuning + Humanoid-v3. Not vanilla PPO on CPU MuJoCo. See
 Notes on the evaluation results:
 - Deterministic (mean-action) rollout regularly beats the stochastic training
   return by 20–50%. Walker2d: 1800 → 3690 (2×). HalfCheetah: even larger gap.
-- All eval episodes ran to timeout — policies are stable.
+- All eval episodes ran to timeout - policies are stable.
 
 ## Comparison vs. published benchmarks
 
@@ -82,7 +82,7 @@ Notes on the evaluation results:
 | Humanoid-v5    | 716.11 ± 49.08 (v4)          | 5819.09 ± 663.53 (v3, tuned) | 620–646 (training only)   | ✅ reproduced CleanRL within 1σ       |
 | Walker2d-v5    | 2287.95 ± 571.78 (v4)        | 3478.79 ± 821.70 (v3, tuned) | **3690.78 ± 155.55**      | ✅ exceeds CleanRL upper 1σ, matches SB3-tuned |
 | HalfCheetah-v5 | 1442.64 ± 46.03 (v4)         | 3397.00 ± 1662.36 (v3)  | **5256.53 ± 73.67**         | ✅ **3.6× CleanRL, 1.5× SB3, tightest std** |
-| Ant-v5         | ~2400 (estimated, 3M steps)  | 2500 ± 1200 (v3, 2M steps)  | 566.88 ± 379.09 (3M steps) | ⚠️ partial — high variance, policy still learning |
+| Ant-v5         | ~2400 (estimated, 3M steps)  | 2500 ± 1200 (v3, 2M steps)  | 566.88 ± 379.09 (3M steps) | ⚠️ partial - high variance, policy still learning |
 
 ## Headline verified findings
 
@@ -95,14 +95,14 @@ Notes on the evaluation results:
    entire literature. Breaking that ceiling requires either a different
    algorithm (SAC/TD3), a different simulator (Isaac Gym / Brax with 8192
    envs), or aggressive hyperparameter tuning.
-3. **Walker2d demonstrates working bipedal locomotion** — stable synchronous
+3. **Walker2d demonstrates working bipedal locomotion** - stable synchronous
    hop gait, no falls across 5 evaluation episodes, mean episode length
    992.8/1000.
 4. **HalfCheetah demonstrates high-speed running locomotion** at 5256 mean
-   return with 1.4% episode-to-episode variance — amongst the highest
+   return with 1.4% episode-to-episode variance - amongst the highest
    published results for vanilla PPO with default hyperparameters.
 5. **Ant-v5 (original brief) shows a partially-learned gait at 3M steps.**
-   Mean return 567 ± 379, mean episode length 664/1000 — the policy trots
+   Mean return 567 ± 379, mean episode length 664/1000 - the policy trots
    successfully ~65% of the time but falls ~35%. The high variance (67% CV)
    indicates the policy has found a gait but hasn't yet made it robust.
    Longer training (5M+ steps) is the expected path to stable locomotion.
