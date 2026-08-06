@@ -265,12 +265,6 @@ Good practices learned from running many experiments:
 - If the agent overfits or is unstable: reduce learning rate, increase `max_grad_norm`, enable `clip_vloss`.
 - For exploration-challenging tasks: set `ent_coef` to a small positive value (1e-3–1e-2), or use a learning rate schedule.
 
-## Reproducibility checklist for publication
-
-- Commit the exact `configs/` used and log the Git SHA in `docs/Experiments.md`.
-- Save seeds, checkpoint paths, and final evaluation scripts used to produce reported numbers.
-- For large runs, publish TensorBoard logs and sample videos as supplementary materials rather than storing large binaries in Git.
-
 ## Next steps and extensions
 
 - Add optional support for mixed-precision training for speedups on modern GPUs.
