@@ -203,7 +203,7 @@ report.
 
 | Env | What happened | Eval return | Benchmark |
 |-----|--------------|-------------|-----------|
-| **HalfCheetah-v5** | Robot runs fast, smooth gallop | 5257 | CleanRL: 1443 (we're 3.6× higher) |
+| **HalfCheetah-v5** | Robot runs fast, smooth gallop | 5257 | CleanRL: 1443 on v4 training returns (higher, but not like-for-like) |
 | **Walker2d-v5** | Robot hops both legs together, never falls | 3691 | CleanRL: 2288 (we're above the top of their range) |
 | **Humanoid-v5** | Robot stands, barely moves | ~640 | CleanRL: 716 (we match) |
 | **Ant-v5** | Robot trots but falls ~35% of eval episodes | 567 ± 379 (high variance) | CleanRL: ~2400 (needs more training) |

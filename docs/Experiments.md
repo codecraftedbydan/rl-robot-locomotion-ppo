@@ -250,7 +250,9 @@ Reference-implementation comparison:
 - CleanRL PPO HalfCheetah-v4 benchmark: 1442.64 ± 46.03 (their upper 1σ
   bound is ~1489).
 - Stable-Baselines3 PPO HalfCheetah-v3 (1M steps, 1 seed): 3397.00 ± 1662.36.
-- **Ours (eval): 5256.53** - **3.6× CleanRL's number, 1.5× SB3's number**.
+- **Ours (eval): 5256.53** - numerically about 3.6× CleanRL's and 1.5× SB3's
+  figures, but not like-for-like: those are v4/v3 training returns, mine is v5
+  with deterministic evaluation.
 - This is in the same league as tuned Tianshou (~7337) and clearly above
   every default-hyperparameter published result we can compare against.
 - Standard deviation of 73 on a mean of 5256 = **1.4% variance across
@@ -269,7 +271,8 @@ Diagnostics at end of training: *(fill in from TB CSVs when exporting)*
 
 Notes / observations:
 - Third benchmark reproduction (Humanoid within 1σ, Walker2d above upper 1σ,
-  HalfCheetah at 3.6× the reference). Same code, unchanged.
+  HalfCheetah above the reference, with the env-version and evaluation-method
+  caveat above). Same code, unchanged.
 - The much larger gap here vs Walker2d is because HalfCheetah is an
   intrinsically easier problem: no termination, smooth reward, plentiful
   exploration signal. Vanilla PPO shines when the reward landscape doesn't

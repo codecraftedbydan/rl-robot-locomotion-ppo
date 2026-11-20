@@ -6,15 +6,21 @@ Optimization for continuous control on MuJoCo tasks (gymnasium + MuJoCo).
 **No Stable-Baselines3 in the training path.** SB3 is only referenced later as
 an external benchmark to compare against; it is never imported here.
 
-## Results - verified against CleanRL and SB3 benchmarks
+## Results - compared with published CleanRL and SB3 benchmarks
 
-Three from-scratch reproductions on unmodified code:
+Three from-scratch reproductions on unmodified code.
+
+> **Caveat on comparability:** the reference numbers are published CleanRL and
+> Stable-Baselines3 (SB3) results on older environment versions (v4 and v3),
+> reported from training returns, whereas my numbers are on v5 environments with
+> deterministic evaluation. The comparison is indicative, not like-for-like; I
+> have not rerun the baselines under identical conditions.
 
 | Environment | CleanRL PPO (v4) | SB3 PPO (v3, tuned) | **This repo (v5, deterministic eval)** | Verdict |
 |-------------|:----------------:|:-------------------:|:---------------------------------------:|:--------|
-| **HalfCheetah-v5** | 1442.64 ± 46.03 | 3397.00 ± 1662.36 | **5256.53 ± 73.67**  | ✅ **3.6x CleanRL, 1.5x SB3, tightest σ of any comparison** |
-| **Walker2d-v5**    | 2287.95 ± 571.78 | 3478.79 ± 821.70 | **3690.78 ± 155.55** | ✅ exceeds CleanRL upper 1σ, matches SB3-tuned |
-| **Humanoid-v5**    | 716.11 ± 49.08 | 5819 ± 663 (heavy tuning + v3) | 620-646 (training only) | ✅ reproduced CleanRL within 1σ |
+| **HalfCheetah-v5** | 1442.64 ± 46.03 | 3397.00 ± 1662.36 | **5256.53 ± 73.67**  | ✅ above both published references, with low variance across evaluation episodes (different env version and evaluation method, see caveat above) |
+| **Walker2d-v5**    | 2287.95 ± 571.78 | 3478.79 ± 821.70 | **3690.78 ± 155.55** | ✅ above the CleanRL reference, in line with tuned SB3 (see caveat) |
+| **Humanoid-v5**    | 716.11 ± 49.08 | 5819 ± 663 (heavy tuning + v3) | 620-646 (training only) | ✅ within 1σ of the CleanRL reference |
 | **Ant-v5**         | ~2400 (est.)    | -                   | 567 ± 379 (3M steps, partially converged) | ⚠️ trotting gait learned, needs longer training for stability |
 
 Full analysis, training curves, and honest discussion of the Humanoid ceiling

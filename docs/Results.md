@@ -81,15 +81,20 @@ Notes on the evaluation results:
 |----------------|-------------------------------|-------------------------|----------------------------|----------------------------------------|
 | Humanoid-v5    | 716.11 ± 49.08 (v4)          | 5819.09 ± 663.53 (v3, tuned) | 620–646 (training only)   | ✅ reproduced CleanRL within 1σ       |
 | Walker2d-v5    | 2287.95 ± 571.78 (v4)        | 3478.79 ± 821.70 (v3, tuned) | **3690.78 ± 155.55**      | ✅ exceeds CleanRL upper 1σ, matches SB3-tuned |
-| HalfCheetah-v5 | 1442.64 ± 46.03 (v4)         | 3397.00 ± 1662.36 (v3)  | **5256.53 ± 73.67**         | ✅ **3.6× CleanRL, 1.5× SB3, tightest std** |
+| HalfCheetah-v5 | 1442.64 ± 46.03 (v4)         | 3397.00 ± 1662.36 (v3)  | **5256.53 ± 73.67**         | ✅ above both references (not like-for-like, see note) |
 | Ant-v5         | ~2400 (estimated, 3M steps)  | 2500 ± 1200 (v3, 2M steps)  | 566.88 ± 379.09 (3M steps) | ⚠️ partial - high variance, policy still learning |
+
+> Note: the reference numbers use older environment versions (v4/v3) and training
+> returns; mine use v5 with deterministic evaluation, so the ratios are indicative
+> rather than like-for-like.
 
 ## Headline verified findings
 
 1. **Correct implementation, verified on three independent envs.** From-scratch
    PPO reproduces or exceeds the CleanRL PPO benchmark on all three:
    Humanoid-v5 (within 1σ), Walker2d-v5 (above upper 1σ), HalfCheetah-v5
-   (3.6× the reference).
+   (above the reference; env version and evaluation method differ, so this is
+   indicative rather than like-for-like).
 2. **Humanoid ceiling is algorithmic, not implementation-quality.**
    Vanilla PPO on CPU MuJoCo caps around 700 return on Humanoid across the
    entire literature. Breaking that ceiling requires either a different
