@@ -1,0 +1,5 @@
+# Minimal dependencies for the unit tests (no MuJoCo needed)
+numpy>=1.26
+gymnasium>=1.0.0
+PyYAML>=6.0
+pytest>=8.3.0

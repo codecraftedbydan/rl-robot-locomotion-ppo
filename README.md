@@ -37,6 +37,16 @@ Full-length evaluation videos:
 - [HalfCheetah-v5](https://github.com/user-attachments/assets/1d2eeb7b-ccd6-482d-9ac0-842e0df94c91)
 - [Ant-v5](https://github.com/user-attachments/assets/a6af2650-87bc-4210-83b5-fff151eb0be0)
 
+## Tests
+
+Unit tests check Generalized Advantage Estimation (GAE) against a reference implementation (including episode boundaries across parallel environments) and the actor's distribution shapes and initialisation. They run on every push via GitHub Actions and need no MuJoCo install:
+
+```bash
+pip install torch --index-url https://download.pytorch.org/whl/cpu
+pip install -r requirements-test.txt
+python -m pytest -q
+```
+
 ## Contents
 
 ```
